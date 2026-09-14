@@ -9,22 +9,25 @@ document.addEventListener("DOMContentLoaded", function() {
         const photo_mix = L.tileLayer(nlscUrl, { id: 'PHOTO_MIX', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
         const photo2 = L.tileLayer(nlscUrl, { id: 'PHOTO2', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
         
-        // [中央研究院] 改用官方底層 PHP API (file-exists.php) 徹底解決 500 錯誤
+        // [中央研究院] 使用官方 PHP API 介接，格式為 {id}-{ext}-{z}-{x}-{y}
         const sinicaPhpUrl = 'https://gis.sinica.edu.tw/tileserver/file-exists.php?img={id}-{ext}-{z}-{x}-{y}';
         
+        // 依據歷史地圖特性設定對應的 jpg 或 png
         const jm50k_1916 = L.tileLayer(sinicaPhpUrl, { 
             id: 'JM50K_1916', 
-            ext: 'png', // 若破圖可改為 jpg
+            ext: 'png', 
             maxZoom: 20, 
-            maxNativeZoom: 15, 
+            maxNativeZoom: 15, // 超過 z15 自動使用影像放大，不請求新圖磚
+            bounds: [[21.5, 119.5], [25.5, 122.5]], // 限制只在台灣範圍內請求，減少邊緣 404 報錯
             attribution: '© 中央研究院' 
         });
         
         const landuse250k_1956 = L.tileLayer(sinicaPhpUrl, { 
             id: '1956_Landuse_250K_1', 
-            ext: 'jpg', // 土地利用圖通常為 jpg
+            ext: 'jpg', 
             maxZoom: 20, 
             maxNativeZoom: 12, 
+            bounds: [[21.5, 119.5], [25.5, 122.5]],
             attribution: '© 中央研究院' 
         });
         
@@ -33,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ext: 'jpg', 
             maxZoom: 20, 
             maxNativeZoom: 12, 
+            bounds: [[21.5, 119.5], [25.5, 122.5]],
             attribution: '© 中央研究院' 
         });
         
@@ -41,19 +45,11 @@ document.addEventListener("DOMContentLoaded", function() {
             ext: 'png', 
             maxZoom: 20, 
             maxNativeZoom: 16, 
+            bounds: [[21.5, 119.5], [25.5, 122.5]],
             attribution: '© 中央研究院' 
         });
         
         // 定義底圖清單
-        const baseMaps = {
-            "最新正射影像混合圖 (NLSC)": photo_mix,
-            "最新正射影像 (NLSC)": photo2,
-            "1916年 蕃地地形圖 (中研院)": jm50k_1916,
-            "1956年 土地利用圖 (中研院)": landuse250k_1956,
-            "1963年 台灣省地形圖 (中研院)": tm250k_1963,
-            "1993年 經建版地形圖 (中研院)": tm25k_1993
-        };
-
         const baseMaps = {
             "最新正射影像混合圖 (NLSC)": photo_mix,
             "最新正射影像 (NLSC)": photo2,
