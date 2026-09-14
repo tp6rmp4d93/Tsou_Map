@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const photo_mix = L.tileLayer(nlscUrl.replace('{id}', 'PHOTO_MIX'), { maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
         const photo2 = L.tileLayer(nlscUrl.replace('{id}', 'PHOTO2'), { maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
 
-        const sinicaUrl = 'https://gis.sinica.edu.tw/tileserver/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={id}&STYLE=default&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg';
+        // 已將結尾的 FORMAT=image/jpeg 修正為 FORMAT=image/png
+        const sinicaUrl = 'https://gis.sinica.edu.tw/tileserver/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={id}&STYLE=default&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/png';
         const jm50k_1916 = L.tileLayer(sinicaUrl.replace('{id}', 'JM50K_1916'), { maxZoom: 20, maxNativeZoom: 15, attribution: '© 中央研究院' });
         const landuse250k_1956 = L.tileLayer(sinicaUrl.replace('{id}', '1956_Landuse_250K_1'), { maxZoom: 20, maxNativeZoom: 12, attribution: '© 中央研究院' });
         const tm250k_1963 = L.tileLayer(sinicaUrl.replace('{id}', 'TM250K_1963'), { maxZoom: 20, maxNativeZoom: 12, attribution: '© 中央研究院' });
