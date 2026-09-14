@@ -1,40 +1,59 @@
 document.addEventListener("DOMContentLoaded", function() {
     try {
-// ==========================================
-// 1. 定義 WMTS / XYZ 底圖圖層
-// ==========================================
-
-// [內政部國土測繪中心] (維持原樣)
-const nlscUrl = 'https://wmts.nlsc.gov.tw/wmts/{id}/default/GoogleMapsCompatible/{z}/{y}/{x}';
-const photo_mix = L.tileLayer(nlscUrl.replace('{id}', 'PHOTO_MIX'), { maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
-const photo2 = L.tileLayer(nlscUrl.replace('{id}', 'PHOTO2'), { maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
-
-// [中央研究院] 改用 ArcGIS 原生 XYZ 網址格式介接，直接讀取底層快取，解決 MIXED 格式造成的 500 錯誤
-const sinicaTileUrl = 'https://gis.sinica.edu.tw/tileserver/rest/services/{id}/MapServer/tile/{z}/{y}/{x}';
-
-const jm50k_1916 = L.tileLayer(sinicaTileUrl.replace('{id}', 'JM50K_1916'), { 
-    maxZoom: 20, 
-    maxNativeZoom: 15, 
-    attribution: '© 中央研究院' 
-});
-
-const landuse250k_1956 = L.tileLayer(sinicaTileUrl.replace('{id}', '1956_Landuse_250K_1'), { 
-    maxZoom: 20, 
-    maxNativeZoom: 12, 
-    attribution: '© 中央研究院' 
-});
-
-const tm250k_1963 = L.tileLayer(sinicaTileUrl.replace('{id}', 'TM250K_1963'), { 
-    maxZoom: 20, 
-    maxNativeZoom: 12, 
-    attribution: '© 中央研究院' 
-});
-
-const tm25k_1993 = L.tileLayer(sinicaTileUrl.replace('{id}', 'TM25K_1993'), { 
-    maxZoom: 20, 
-    maxNativeZoom: 16, 
-    attribution: '© 中央研究院' 
-});
+        // ==========================================
+        // 1. 定義 WMTS 底圖圖層
+        // ==========================================
+        
+        // [內政部國土測繪中心]
+        const nlscUrl = 'https://wmts.nlsc.gov.tw/wmts/{id}/default/GoogleMapsCompatible/{z}/{y}/{x}';
+        const photo_mix = L.tileLayer(nlscUrl, { id: 'PHOTO_MIX', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
+        const photo2 = L.tileLayer(nlscUrl, { id: 'PHOTO2', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
+        
+        // [中央研究院] OGC WMTS 標準語法 (已修正 STYLE=_null 並參數化 FORMAT)
+        const sinicaWmtsUrl = 'https://gis.sinica.edu.tw/tileserver/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={id}&STYLE=_null&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT={format}';
+        
+        // 依據中研院規範，針對個別圖層設定對應的 image/png 或 image/jpeg
+        const jm50k_1916 = L.tileLayer(sinicaWmtsUrl, { 
+            id: 'JM50K_1916', 
+            format: 'image/png', // 參考 1920 年代圖資設定為 png
+            maxZoom: 20, 
+            maxNativeZoom: 15, 
+            attribution: '© 中央研究院' 
+        });
+        
+        const landuse250k_1956 = L.tileLayer(sinicaWmtsUrl, { 
+            id: '1956_Landuse_250K_1', 
+            format: 'image/jpeg', // 土地利用圖通常為全幅不透明網格，設為 jpeg
+            maxZoom: 20, 
+            maxNativeZoom: 12, 
+            attribution: '© 中央研究院' 
+        });
+        
+        const tm250k_1963 = L.tileLayer(sinicaWmtsUrl, { 
+            id: 'TM250K_1963', 
+            format: 'image/jpeg', 
+            maxZoom: 20, 
+            maxNativeZoom: 12, 
+            attribution: '© 中央研究院' 
+        });
+        
+        const tm25k_1993 = L.tileLayer(sinicaWmtsUrl, { 
+            id: 'TM25K_1993', 
+            format: 'image/png', // 經建版地形圖具備線條與文字，通常支援 png
+            maxZoom: 20, 
+            maxNativeZoom: 16, 
+            attribution: '© 中央研究院' 
+        });
+        
+        // 定義底圖清單 (單選)
+        const baseMaps = {
+            "最新正射影像混合圖 (NLSC)": photo_mix,
+            "最新正射影像 (NLSC)": photo2,
+            "1916年 蕃地地形圖 (中研院)": jm50k_1916,
+            "1956年 土地利用圖 (中研院)": landuse250k_1956,
+            "1963年 台灣省地形圖 (中研院)": tm250k_1963,
+            "1993年 經建版地形圖 (中研院)": tm25k_1993
+        };
 
         const baseMaps = {
             "最新正射影像混合圖 (NLSC)": photo_mix,
