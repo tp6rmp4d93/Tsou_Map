@@ -3,39 +3,42 @@ document.addEventListener("DOMContentLoaded", function() {
         // ==========================================
         // 1. 定義 WMTS 底圖圖層
         // ==========================================
+        
+        // [內政部國土測繪中心]
         const nlscUrl = 'https://wmts.nlsc.gov.tw/wmts/{id}/default/GoogleMapsCompatible/{z}/{y}/{x}';
         const photo_mix = L.tileLayer(nlscUrl, { id: 'PHOTO_MIX', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
         const photo2 = L.tileLayer(nlscUrl, { id: 'PHOTO2', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
-
-        // 中研院官方標準 OGC WMTS 語法
-        const sinicaWmtsUrl = 'https://gis.sinica.edu.tw/tileserver/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER={id}&STYLE=_null&TILEMATRIXSET=GoogleMapsCompatible&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT={format}';
-
-        // 依比例尺與特性設定各歷史圖層
-        const jm50k_1916 = L.tileLayer(sinicaWmtsUrl, { id: 'JM50K_1916', format: 'image/jpeg', maxZoom: 20, maxNativeZoom: 15, attribution: '© 中央研究院' });
-        const landuse250k_1956 = L.tileLayer(sinicaWmtsUrl, { id: '1956_Landuse_250K_1', format: 'image/jpeg', maxZoom: 20, maxNativeZoom: 12, attribution: '© 中央研究院' });
-        const tm250k_1963 = L.tileLayer(sinicaWmtsUrl, { id: 'TM250K_1963', format: 'image/jpeg', maxZoom: 20, maxNativeZoom: 12, attribution: '© 中央研究院' });
         
-        // 新增的圖層
-        const jm200k_1897 = L.tileLayer(sinicaWmtsUrl, { id: 'JM200K_1897_new', format: 'image/jpeg', maxZoom: 20, maxNativeZoom: 11, attribution: '© 中央研究院' });
-        const jm300k_1939 = L.tileLayer(sinicaWmtsUrl, { id: 'JM300K_1939', format: 'image/jpeg', maxZoom: 20, maxNativeZoom: 11, attribution: '© 中央研究院' });
-        const tm100k_1987 = L.tileLayer(sinicaWmtsUrl, { id: 'TM100K_1987', format: 'image/jpeg', maxZoom: 20, maxNativeZoom: 13, attribution: '© 中央研究院' });
-        const tm25k_1989 = L.tileLayer(sinicaWmtsUrl, { id: 'TM25K_1989', format: 'image/png', maxZoom: 20, maxNativeZoom: 16, attribution: '© 中央研究院' });
-        const tm25k_1993 = L.tileLayer(sinicaWmtsUrl, { id: 'TM25K_1993', format: 'image/png', maxZoom: 20, maxNativeZoom: 16, attribution: '© 中央研究院' });
-        const tm25k_2003 = L.tileLayer(sinicaWmtsUrl, { id: 'TM25K_2003', format: 'image/png', maxZoom: 20, maxNativeZoom: 16, attribution: '© 中央研究院' });
-
-        // 定義底圖清單
+        // [中央研究院] 使用官方 PHP API 介接 (file-exists.php)
+        const sinicaPhpUrl = 'https://gis.sinica.edu.tw/tileserver/file-exists.php?img={id}-{ext}-{z}-{x}-{y}';
+        const taiwanBounds = [[21.5, 119.5], [25.5, 122.5]];
+        
+        // 原有圖層
+        const jm50k_1916 = L.tileLayer(sinicaPhpUrl, { id: 'JM50K_1916', ext: 'png', maxZoom: 20, maxNativeZoom: 15, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const landuse250k_1956 = L.tileLayer(sinicaPhpUrl, { id: '1956_Landuse_250K_1', ext: 'jpg', maxZoom: 20, maxNativeZoom: 12, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm250k_1963 = L.tileLayer(sinicaPhpUrl, { id: 'TM250K_1963', ext: 'jpg', maxZoom: 20, maxNativeZoom: 12, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        
+        // 新增的 6 個歷史地圖圖層 (依比例尺與年代設定適當的 maxNativeZoom)
+        const jm200k_1897 = L.tileLayer(sinicaPhpUrl, { id: 'JM200K_1897_new', ext: 'jpg', maxZoom: 20, maxNativeZoom: 11, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const jm300k_1939 = L.tileLayer(sinicaPhpUrl, { id: 'JM300K_1939', ext: 'jpg', maxZoom: 20, maxNativeZoom: 11, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm100k_1987 = L.tileLayer(sinicaPhpUrl, { id: 'TM100K_1987', ext: 'jpg', maxZoom: 20, maxNativeZoom: 13, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm25k_1989 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1989', ext: 'png', maxZoom: 20, maxNativeZoom: 16, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm25k_1993 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1993', ext: 'png', maxZoom: 20, maxNativeZoom: 16, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm25k_2003 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_2003', ext: 'png', maxZoom: 20, maxNativeZoom: 16, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        
+        // 定義底圖清單 (已包含新加入的圖層)
         const baseMaps = {
             "最新正射影像混合圖 (NLSC)": photo_mix,
             "最新正射影像 (NLSC)": photo2,
             "1897 假製二十萬分一圖": jm200k_1897,
             "1916 蕃地地形圖": jm50k_1916,
             "1939 臺灣全圖(第五版)": jm300k_1939,
-            "1956 土地利用圖 (250K)": landuse250k_1956,
-            "1963 臺灣省地形圖 (250K)": tm250k_1963,
-            "1987 臺灣地形圖 (100K)": tm100k_1987,
-            "1989 經建1版地形圖 (25K)": tm25k_1989,
-            "1993 經建2版地形圖 (25K)": tm25k_1993,
-            "2003 經建4版地形圖 (25K)": tm25k_2003
+            "1956 土地利用圖": landuse250k_1956,
+            "1963 台灣省地形圖": tm250k_1963,
+            "1987 臺灣地形圖 (1:100k)": tm100k_1987,
+            "1989 經建1版地形圖": tm25k_1989,
+            "1993 經建2版地形圖": tm25k_1993,
+            "2003 經建4版地形圖": tm25k_2003
         };
 
         // ==========================================
