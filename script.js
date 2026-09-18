@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // [內政部國土測繪中心]
         const nlscUrl = 'https://wmts.nlsc.gov.tw/wmts/{id}/default/GoogleMapsCompatible/{z}/{y}/{x}';
-        const photo_mix = L.tileLayer(nlscUrl, { id: 'PHOTO_MIX', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
-        const photo2 = L.tileLayer(nlscUrl, { id: 'PHOTO2', maxZoom: 20, maxNativeZoom: 19, attribution: '© 內政部國土測繪中心' });
+        const photo_mix = L.tileLayer(nlscUrl, { id: 'PHOTO_MIX', attribution: '© 內政部國土測繪中心' });
+        const photo2 = L.tileLayer(nlscUrl, { id: 'PHOTO2', attribution: '© 內政部國土測繪中心' });
+        const B25000 = L.tileLayer(nlscUrl, { id: 'B25000', attribution: '© 內政部國土測繪中心' });
         
         // [中央研究院] 使用官方 PHP API 介接 (file-exists.php)
         const sinicaPhpUrl = 'https://gis.sinica.edu.tw/tileserver/file-exists.php?img={id}-{ext}-{z}-{x}-{y}';
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const baseMaps = {
             "最新正射影像混合圖 (NLSC)": photo_mix,
             "最新正射影像 (NLSC)": photo2,
+            "經建版地形圖 (NLSC)": B25000,
             "1897 假製二十萬分一圖": jm200k_1897,
             "1916 蕃地地形圖": jm50k_1916,
             "1939 臺灣全圖(第五版)": jm300k_1939,
