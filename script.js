@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const jm200k_1897 = L.tileLayer(sinicaPhpUrl, { id: 'JM200K_1897_new', ext: 'jpg',attribution: '© 中央研究院' });
         const jm300k_1939 = L.tileLayer(sinicaPhpUrl, { id: 'JM300K_1939', ext: 'png', attribution: '© 中央研究院' });
         const tm100k_1987 = L.tileLayer(sinicaPhpUrl, { id: 'TM100K_1987', ext: 'png', attribution: '© 中央研究院' });
-        const tm25k_1989 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1989', ext: 'png', attribution: '© 中央研究院' });
-        const tm25k_1993 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1993', ext: 'png', attribution: '© 中央研究院' });
-        const tm25k_2001 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_2001', ext: 'png', attribution: '© 中央研究院' });
+        const tm25k_1989 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1989', ext: 'jpg', attribution: '© 中央研究院' });
+        const tm25k_1993 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1993', ext: 'jpg', attribution: '© 中央研究院' });
+        const tm25k_2001 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_2001', ext: 'jpg', attribution: '© 中央研究院' });
         
         // 定義底圖清單 (已包含新加入的圖層)
         const baseMaps = {
