@@ -14,17 +14,17 @@ document.addEventListener("DOMContentLoaded", function() {
         const taiwanBounds = [[21.5, 119.5], [25.5, 122.5]];
         
         // 原有圖層
-        const jm50k_1916 = L.tileLayer(sinicaPhpUrl, { id: 'JM50K_1916', ext: 'png', maxZoom: 20, maxNativeZoom: 15, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const landuse250k_1956 = L.tileLayer(sinicaPhpUrl, { id: '1956_Landuse_250K_1', ext: 'jpg', maxZoom: 20, maxNativeZoom: 12, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const tm250k_1963 = L.tileLayer(sinicaPhpUrl, { id: 'TM250K_1963', ext: 'jpg', maxZoom: 20, maxNativeZoom: 12, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const jm50k_1916 = L.tileLayer(sinicaPhpUrl, { id: 'JM50K_1916', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const landuse250k_1956 = L.tileLayer(sinicaPhpUrl, { id: '1956_Landuse_250K_1', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm250k_1963 = L.tileLayer(sinicaPhpUrl, { id: 'TM250K_1963', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
         
         // 新增的 6 個歷史地圖圖層 (依比例尺與年代設定適當的 maxNativeZoom)
-        const jm200k_1897 = L.tileLayer(sinicaPhpUrl, { id: 'JM200K_1897_new', ext: 'jpg', maxZoom: 20, maxNativeZoom: 11, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const jm300k_1939 = L.tileLayer(sinicaPhpUrl, { id: 'JM300K_1939', ext: 'jpg', maxZoom: 20, maxNativeZoom: 11, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const tm100k_1987 = L.tileLayer(sinicaPhpUrl, { id: 'TM100K_1987', ext: 'jpg', maxZoom: 20, maxNativeZoom: 13, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const tm25k_1989 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1989', ext: 'png', maxZoom: 20, maxNativeZoom: 16, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const tm25k_1993 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1993', ext: 'png', maxZoom: 20, maxNativeZoom: 16, bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const tm25k_2003 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_2003', ext: 'png', maxZoom: 20, maxNativeZoom: 16, bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const jm200k_1897 = L.tileLayer(sinicaPhpUrl, { id: 'JM200K_1897_new', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const jm300k_1939 = L.tileLayer(sinicaPhpUrl, { id: 'JM300K_1939', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm100k_1987 = L.tileLayer(sinicaPhpUrl, { id: 'TM100K_1987', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm25k_1989 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1989', ext: 'png',bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm25k_1993 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1993', ext: 'png', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm25k_2001 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_2001', ext: 'png', bounds: taiwanBounds, attribution: '© 中央研究院' });
         
         // 定義底圖清單 (已包含新加入的圖層)
         const baseMaps = {
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "1987 臺灣地形圖 (1:100k)": tm100k_1987,
             "1989 經建1版地形圖": tm25k_1989,
             "1993 經建2版地形圖": tm25k_1993,
-            "2003 經建4版地形圖": tm25k_2003
+            "2001 經建3版地形圖": tm25k_2001
         };
 
         // ==========================================
