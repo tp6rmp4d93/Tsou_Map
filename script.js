@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // 新增的 6 個歷史地圖圖層 (依比例尺與年代設定適當的 maxNativeZoom)
         const jm200k_1897 = L.tileLayer(sinicaPhpUrl, { id: 'JM200K_1897_new', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const jm300k_1939 = L.tileLayer(sinicaPhpUrl, { id: 'JM300K_1939', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
-        const tm100k_1987 = L.tileLayer(sinicaPhpUrl, { id: 'TM100K_1987', ext: 'jpg', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const jm300k_1939 = L.tileLayer(sinicaPhpUrl, { id: 'JM300K_1939', ext: 'png', bounds: taiwanBounds, attribution: '© 中央研究院' });
+        const tm100k_1987 = L.tileLayer(sinicaPhpUrl, { id: 'TM100K_1987', ext: 'png', bounds: taiwanBounds, attribution: '© 中央研究院' });
         const tm25k_1989 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1989', ext: 'png',bounds: taiwanBounds, attribution: '© 中央研究院' });
         const tm25k_1993 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_1993', ext: 'png', bounds: taiwanBounds, attribution: '© 中央研究院' });
         const tm25k_2001 = L.tileLayer(sinicaPhpUrl, { id: 'TM25K_2001', ext: 'png', bounds: taiwanBounds, attribution: '© 中央研究院' });
